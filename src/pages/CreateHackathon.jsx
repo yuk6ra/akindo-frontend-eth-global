@@ -286,7 +286,7 @@ const CreateHackathon = () => {
                                                     {depositAmount}
                                                 </Text>
                                                 <Text>
-                                                    {ERC20unit} "/10^6"
+                                                    {ERC20unit}
                                                 </Text>
 
                                             </HStack>
