@@ -71,19 +71,15 @@ const Header = () => {
                     </Heading>
                     <HStack>
                         <CustomButton
-                            onClick={() => navigate('/create')}
+                            onClick={() => navigate('/hackathons/create')}
                         >
                             Create Hackathon
                         </CustomButton>
                         <CustomButton
-                            onClick={() => navigate('/submit')}
+                            onClick={() => navigate('/')}
+                            isDisabled={true}
                         >
-                            Submit Product
-                        </CustomButton>
-                        <CustomButton
-                            onClick={() => navigate('/vote')}
-                        >
-                            Voting Now
+                            Create Product
                         </CustomButton>
 
                     </HStack>

@@ -71,7 +71,8 @@ const HackathonCard = ({
                                 event.stopPropagation();
                                 window.open(`https://snapshot.org/#/hackathon.eth/proposal/${hackathonId.replace(/ /g, '-')}`);
                             }}
-                            isDisabled={"true"}
+                            colorScheme='yellow'
+                            isDisabled={false}
                         >
                             Vote Now
                         </Button>
