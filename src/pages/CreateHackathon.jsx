@@ -27,6 +27,7 @@ import {
 
 import SliderInput from '../components/SliderInput.jsx'
 import { ethers } from 'ethers'
+import { useNavigate } from 'react-router-dom'
 
 // ABI
 import HackathonContract from '../ABIs/WaveHackathon.json'
@@ -40,6 +41,7 @@ const USDC_ADDRESS = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"/// @dev: LINK
 
 const CreateHackathon = () => {
     const [walletAddress, setWalletAddress] = useState(null);
+    const navigate = useNavigate()
 
     const [ERC20unit, setERC20Unit] = useState("USDC");
     const [ERC20address, setERC20Address] = useState(USDC_ADDRESS);
@@ -49,14 +51,13 @@ const CreateHackathon = () => {
     const [waveSubmitTime, setWaveSubmitTime] = useState(3);
     const [waveVoteTime, setWaveVoteTime] = useState(100); // 1 day constant
 
+    const [hackathonId, setHackathonId] = useState(null);
+
     // Minig
     const [txnHash, setTxnHash] = useState(null);
     const [miningStatus, setMiningStatus] = useState(null);
 
     const abi = HackathonContract.abi
-    console.log(abi)
-
-    const hackathonId = 1;
 
     console.log(walletAddress)
 
@@ -151,11 +152,9 @@ const CreateHackathon = () => {
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
-                const hackathonId = Math.random().toString(36).substring(7) // hackathon name
+                const seed = Math.random().toString(36).substring(7) // hackathon name
                 const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
-
-                console.log(hackathonId)
-
+                
                 let open = await contract.open(
                     ERC20address,
                     walletAddress,
@@ -163,14 +162,14 @@ const CreateHackathon = () => {
                     depositAmount, // 1000 depositAmount
                     waveSubmitTime, // 10min
                     waveVoteTime, // 10min
-                    hackathonId,
+                    seed,
                     { gasLimit: 800000 }
                 );
                 await open.wait();
 
                 setTxnHash(open.hash);
                 setMiningStatus('success');
-
+                setHackathonId(seed)
             } else {
                 setMiningStatus('error');
             }
@@ -179,7 +178,6 @@ const CreateHackathon = () => {
             console.log("err");
         }
     }
-
 
     return (
         <>
@@ -335,6 +333,7 @@ const CreateHackathon = () => {
                                         {miningStatus === 'success' && 
                                             <Button
                                                 colorScheme="green"
+                                                onClick={() => {navigate(`/hackathon/${hackathonId}`)}}
                                             >
                                                 Go to Hackathon
                                             </Button>

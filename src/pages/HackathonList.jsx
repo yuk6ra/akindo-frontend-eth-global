@@ -20,10 +20,28 @@ import {
 } from '@chakra-ui/react'
 import HackathonCard from '../components/HackathonCard.jsx'
 import { useNavigate } from 'react-router-dom';
+import HackathonContract from '../ABIs/WaveHackathon.json'
+import { ethers } from 'ethers';
+
+const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: mumbai
 
 const ProductList = () => {
 
-    const navigate = useNavigate();    
+    const [hackathons, setHackathons] = useState([]);
+    
+    const navigate = useNavigate();
+
+    useEffect(() => {        
+        getHackathons();
+    }, [])
+
+    const getHackathons = async () => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
+        const hakachons = await contract.getHackathons();
+        setHackathons(hakachons)
+    }
 
     return (
         <>
@@ -42,7 +60,7 @@ const ProductList = () => {
                         w={"500px"}
                     >
                         <CardBody>
-                            {[1, 2, 3].map((hackathon) => (
+                            {hackathons.map((hackathon) => (
                                 <HackathonCard
                                     key={hackathon}
                                     hackathonId={hackathon}
