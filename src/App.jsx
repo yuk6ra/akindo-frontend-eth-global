@@ -10,6 +10,7 @@ import Home from './pages/Home.jsx';
 import CreateHackathon from './pages/CreateHackathon.jsx';
 import SubmitProduct from './pages/SubmitProduct.jsx';
 import Voting from './pages/Voting.jsx';
+import ProductList from './pages/ProductList.jsx';
 
 export const theme = extendTheme({
     styles: {
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/create" element={<CreateHackathon />} />                    
                     <Route path="/submit" element={<SubmitProduct />} />                    
                     <Route path="/vote" element={<Voting />} />                    
+                    <Route path="/productlist" element={<ProductList />} />
                     <Route path="*" element={<h1>404</h1>} />
                 </Routes>
             </ChakraProvider>

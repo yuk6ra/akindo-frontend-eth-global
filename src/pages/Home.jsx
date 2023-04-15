@@ -2,6 +2,7 @@ import React from 'react'
 import {
     Box,
     Button,
+    ButtonGroup,
     Heading,
 } from '@chakra-ui/react'
 
@@ -41,6 +42,7 @@ const Home = () => {
                 >
                     for CoreTeam
                 </Heading>
+                <ButtonGroup>
                 <Button
                     colorScheme="gray"
                     variant="solid"
@@ -48,6 +50,19 @@ const Home = () => {
                 >
                     Submit Product
                 </Button>
+
+                <Button
+                    colorScheme="gray"
+                    variant="solid"
+                    onClick={() => navigate('/productlist')}
+                >
+                    Product List
+                </Button>
+
+
+                </ButtonGroup>
+
+
 
                 <Heading
                     as="h2"

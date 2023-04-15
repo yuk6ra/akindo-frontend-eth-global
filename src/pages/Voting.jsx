@@ -23,8 +23,14 @@ import {
     Heading,
     VStack,
     MenuGroup,
+    Tag,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+
+
 const Voting = () => {
+
+    const navigate = useNavigate()
 
     const snapshotUrl = "https://snapshot.org/#/"
 
@@ -37,16 +43,21 @@ const Voting = () => {
                         w="700px"
                     >
                         <CardHeader>
-                            <Heading as={"h2"}>Product Name: Hackathon 1</Heading>
+                            <Heading as={"h2"}>Hackathon 1</Heading>
                         </CardHeader>
+                        {/* <CardBody>
+                            <Tag colorScheme='teal'>Wave 1</Tag>
+                        </CardBody> */}
                         <CardFooter>
                             <ButtonGroup>
-
+                            
                                 <Button
                                     onClick={() => window.open(snapshotUrl + 1)}
                                 >SnapShot Space</Button>
-                                <Button>
-                                    Wave 1
+                                <Button
+                                    onClick={()=> navigate('/productlist')}
+                                >
+                                    View Products
                                 </Button>
                             </ButtonGroup>
                         </CardFooter>
@@ -56,7 +67,7 @@ const Voting = () => {
                         w="700px"
                     >
                         <CardHeader>
-                            <Heading as={"h2"}>Product Name: Hackathon 2</Heading>
+                            <Heading as={"h2"}>Hackathon 2</Heading>
                         </CardHeader>
                         <CardBody>
                             <Button
