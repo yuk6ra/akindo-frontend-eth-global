@@ -26,6 +26,8 @@ import {
     Tag,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+// import contract from "../ABIs/akindo-protocol.json";
+
 
 
 const Voting = () => {

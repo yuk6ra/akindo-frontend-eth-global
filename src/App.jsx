@@ -12,6 +12,7 @@ import SubmitProduct from './pages/SubmitProduct.jsx';
 import Voting from './pages/Voting.jsx';
 import ProductList from './pages/ProductList.jsx';
 import Header from './components/Header.jsx';
+import HackathonList from './pages/HackathonList.jsx';
 
 /// Import RainbowKit
 import '@rainbow-me/rainbowkit/styles.css';
@@ -69,7 +70,8 @@ function App() {
                             <Route path="/create" element={<CreateHackathon />} />
                             <Route path="/submit" element={<SubmitProduct />} />
                             <Route path="/vote" element={<Voting />} />
-                            <Route path="/productlist" element={<ProductList />} />
+                            <Route path="/hackathons" element={<HackathonList />} />
+                            <Route path="/products" element={<ProductList />} />
                             <Route path="*" element={<h1>404</h1>} />
                         </Routes>
                     </RainbowKitProvider>

@@ -68,9 +68,15 @@ const Home = () => {
                                 <Button
                                     colorScheme="gray"
                                     variant="solid"
-                                    onClick={() => navigate('/productlist')}
+                                    onClick={() => navigate('/products')}
                                 >
                                     Product List
+                                </Button><Button
+                                    colorScheme="gray"
+                                    variant="solid"
+                                    onClick={() => navigate('/hackathons')}
+                                >
+                                    Hackathon List
                                 </Button>
 
 
@@ -92,6 +98,7 @@ const Home = () => {
                             >
                                 Voting now
                             </Button>
+                            
 
                         </CardBody>
 
