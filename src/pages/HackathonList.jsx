@@ -28,20 +28,36 @@ const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: 
 const ProductList = () => {
 
     const [hackathons, setHackathons] = useState([]);
-    
+    const [waveCounts, setWaveCounts] = useState({});
+
     const navigate = useNavigate();
 
-    useEffect(() => {        
+
+    useEffect(() => {
         getHackathons();
     }, [])
 
+    useEffect(() => {
+        async function fetchWaveCounts() {
+            const counts = {};
+            for (const hackathonId of hackathons) {
+                const count = await contract.getWaveCount(hackathonId);
+                counts[hackathonId] = count.toNumber();
+            }
+            setWaveCounts(counts);
+        }
+        fetchWaveCounts();
+    }, [hackathons]);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
+
     const getHackathons = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
-        const hakachons = await contract.getHackathons();
-        setHackathons(hakachons)
+        const hakachons_ = await contract.getHackathons();
+        setHackathons(hakachons_)
     }
+
 
     return (
         <>
@@ -60,13 +76,15 @@ const ProductList = () => {
                         w={"500px"}
                     >
                         <CardBody>
-                            {hackathons.map((hackathon) => (
+                            {hackathons.map((hackathonId) => (
                                 <HackathonCard
-                                    key={hackathon}
-                                    hackathonId={hackathon}
+                                    key={hackathonId}
+                                    hackathonId={hackathonId}
+                                    waveCount={waveCounts[hackathonId]}
                                 />
                             ))
                             }
+
                             <Center
                                 mt={5}
                             >

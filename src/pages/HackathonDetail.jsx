@@ -35,13 +35,76 @@ import {
     Tag,
 } from '@chakra-ui/react'
 import { useLocation } from 'react-router-dom';
+import { ethers } from "ethers";
+import HackathonContract from "../ABIs/WaveHackathon.json";
 
 import ProductCard from "../components/ProductCard.jsx";
 
+const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: mumbai
+
 const HackathonDetail = () => {
 
+    const [txnHash, setTxnHash] = useState(null);
+    const [miningStatus, setMiningStatus] = useState(null);
+    const [submitProductsList, setSubmitProductsList] = useState([]);
+    const [waveCount, setWaveCount] = useState(0);
+
     const location = useLocation();
-    const pathname = location.pathname.split("/").pop();
+    // 応急処置, 空白処理なし
+    const hackathonId = location.pathname.split("/").pop();
+    
+    useEffect(()=>{
+        getSubmitProducts();
+    }, [])
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
+
+    useEffect(() => {
+        const fetchWaveCount = async () =>{
+            const count = await contract.getWaveCount(hackathonId);
+            setWaveCount(count.toNumber());
+        }
+        fetchWaveCount();
+    }, []);
+
+    const getSubmitProducts = async () => {
+        const hakachons_ = await contract.getSubmitProducts(
+            hackathonId, 0
+        );
+        setSubmitProductsList(hakachons_);        
+        
+    }
+
+
+    const submitProduct = async () => {
+
+        try {
+            setMiningStatus('mining');
+
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
+
+                let submit = await contract.submitProduct(
+                    hackathonId
+                    // { gasLimit: 800000 }
+                );
+                await submit.wait();
+
+                setTxnHash(submit.hash);
+                setMiningStatus('success');
+            } else {
+                setMiningStatus('error');
+            }
+        } catch (err) {
+            setMiningStatus('error');
+            console.log("err");
+        }
+    }
 
     return (
         <>
@@ -60,12 +123,13 @@ const HackathonDetail = () => {
                     <Card>
                         <CardBody>
                             <Heading>
-                                Hackathon Title {pathname}
+                                Project: {hackathonId}
                             </Heading>
 
                             <Tag
+                                mt={2}
                                 colorScheme='green'
-                            >Wave 0</Tag>
+                            >Wave {waveCount}</Tag>
 
                             <Tabs 
                                 mt={5}
@@ -106,6 +170,9 @@ const HackathonDetail = () => {
                                         <Center>
                                             <Button
                                                 mt={5}
+                                                onClick={() => submitProduct()}
+                                                isLoading={miningStatus === 'mining'}
+                                                loadingText="Submitting"
                                             >
                                                 Submit
                                             </Button>
@@ -119,10 +186,11 @@ const HackathonDetail = () => {
                                             Submitted Products
                                         </Heading>
 
-                                        {[1, 2, 3].map((product) => (
+                                        {submitProductsList.map((submittedAddress, index) => (
                                             <ProductCard
-                                                key={product}
-                                                productId={product}
+                                                key={submittedAddress}
+                                                productId={index}
+                                                submittedAddress={submittedAddress}
                                             />
                                         ))}
 

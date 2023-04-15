@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ProductCard = ({
     productId,
+    submittedAddress,
 }) => {
     const navigate = useNavigate()
 
@@ -38,16 +39,21 @@ const ProductCard = ({
                 >
                     <Box
                         display="flex"
-                        alignItems="center"
+                        alignItems="left"
                         justifyContent="space-between"
                     >
 
-
-                        <Heading
-                            size={"md"}
+                        <VStack
+                            textAlign="left"
                         >
-                            Product {productId}
-                        </Heading>
+                            <Heading size={"md"} textAlign="left">
+                                Product {productId}
+                            </Heading>
+                            <Text size={"xs"} textAlign="left">
+                                Submitted Address: {`${submittedAddress.substring(0, 5)}...${submittedAddress.substring(submittedAddress.length - 5)}`}
+                            </Text>
+                        </VStack>
+
                         <Button>
                             View Details
                         </Button>

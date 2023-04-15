@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Box,
     Button,
@@ -19,14 +19,18 @@ import {
     HStack,
     Tag,
 } from '@chakra-ui/react'
+import HackathonContract from '../ABIs/WaveHackathon.json'
 import { useNavigate } from 'react-router-dom'
+import { ethers } from 'ethers'
 
+const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: mumbai
 
 const HackathonCard = ({
     hackathonId,
-    waveStatus = 0,
+    waveCount,
 }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate() 
+
 
     return (
         <>
@@ -53,19 +57,19 @@ const HackathonCard = ({
                             <Heading
                                 size={"md"}
                             >
-                                Hackathon {hackathonId}
+                                {hackathonId}
                             </Heading>
                             <Tag
                                 colorScheme="green"
                             >
-                                Wave {waveStatus}
+                                Wave {waveCount}
                             </Tag>
                         </HStack>
 
                         <Button
                             onClick={(event) => {
                                 event.stopPropagation();
-                                window.open(`https://snapshot.org/#/hackathon.eth/proposal/${hackathonId}`);
+                                window.open(`https://snapshot.org/#/hackathon.eth/proposal/${hackathonId.replace(/ /g, '-')}`);
                             }}
                             isDisabled={"true"}
                         >

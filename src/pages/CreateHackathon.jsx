@@ -43,6 +43,7 @@ const CreateHackathon = () => {
     const [walletAddress, setWalletAddress] = useState(null);
     const navigate = useNavigate()
 
+    const [hackathonId, setHackathonId] = useState(null);
     const [ERC20unit, setERC20Unit] = useState("USDC");
     const [ERC20address, setERC20Address] = useState(USDC_ADDRESS);
     const [waveCount, setWaveCount] = useState(5)
@@ -51,7 +52,6 @@ const CreateHackathon = () => {
     const [waveSubmitTime, setWaveSubmitTime] = useState(3);
     const [waveVoteTime, setWaveVoteTime] = useState(100); // 1 day constant
 
-    const [hackathonId, setHackathonId] = useState(null);
 
     // Minig
     const [txnHash, setTxnHash] = useState(null);
@@ -68,7 +68,7 @@ const CreateHackathon = () => {
     }, [waveCount, wavesPrize])
 
     useEffect(() => {
-        
+
         checkWalletIsConnected();
     }, [walletAddress])
 
@@ -152,9 +152,9 @@ const CreateHackathon = () => {
             if (ethereum) {
                 const provider = new ethers.providers.Web3Provider(ethereum);
                 const signer = provider.getSigner();
-                const seed = Math.random().toString(36).substring(7) // hackathon name
+                // const seed = Math.random().toString(36).substring(7) // hackathon name
                 const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
-                
+
                 let open = await contract.open(
                     ERC20address,
                     walletAddress,
@@ -162,14 +162,13 @@ const CreateHackathon = () => {
                     depositAmount, // 1000 depositAmount
                     waveSubmitTime, // 10min
                     waveVoteTime, // 10min
-                    seed,
+                    hackathonId,
                     { gasLimit: 800000 }
                 );
                 await open.wait();
 
                 setTxnHash(open.hash);
                 setMiningStatus('success');
-                setHackathonId(seed)
             } else {
                 setMiningStatus('error');
             }
@@ -213,6 +212,19 @@ const CreateHackathon = () => {
                                 >
 
                                     <FormControl>
+
+                                        <Box
+                                            mb={boxMy}
+                                        >
+                                            <FormLabel>Hackathon Name</FormLabel>
+                                            <Input
+                                                placeholder='Project X'
+                                                type='text'
+                                                onChange={(e) => setHackathonId(e.target.value)}                                                                                    
+                                            >
+                                            </Input>
+                                        </Box>
+
 
                                         <Box
                                             mb={boxMy}
@@ -302,7 +314,7 @@ const CreateHackathon = () => {
                                                 Safe Address
                                             </FormLabel>
                                             <Input placeholder='10000'
-                                                defaultValue={"0x07865c6E87B9F70255377e024ace6630C1Eaa37F"}                                                
+                                                defaultValue={"0x07865c6E87B9F70255377e024ace6630C1Eaa37F"}
                                             />
                                             <FormHelperText>
                                                 If you do not have a Safe Address, you can refer to
@@ -330,22 +342,22 @@ const CreateHackathon = () => {
                                     {/* Submitする */}
                                     <Center
                                     >
-                                        {miningStatus === 'success' && 
+                                        {miningStatus === 'success' &&
                                             <Button
                                                 colorScheme="green"
-                                                onClick={() => {navigate(`/hackathon/${hackathonId}`)}}
+                                                onClick={() => { navigate(`/hackathons/${hackathonId}`) }}
                                             >
                                                 Go to Hackathon
                                             </Button>
                                         }
 
                                         {miningStatus !== 'success' &&
-                                        <Button
-                                            onClick={openHackathon}
-                                            isLoading={miningStatus === 'mining'}
-                                            loadingText="Submitting"
-                                        >Submit</Button>
-                                    }
+                                            <Button
+                                                onClick={openHackathon}
+                                                isLoading={miningStatus === 'mining'}
+                                                loadingText="Submitting"
+                                            >Submit</Button>
+                                        }
 
                                     </Center>
 
