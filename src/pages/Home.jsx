@@ -58,7 +58,7 @@ const Home = () => {
                 <Button
                     colorScheme="gray"
                     variant="solid"
-                    onClick={() => navigate('/submit')}
+                    onClick={() => navigate('/vote')}
                 >
                     Voting now
                 </Button>
