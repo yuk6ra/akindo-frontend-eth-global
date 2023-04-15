@@ -70,7 +70,6 @@ const Voting = () => {
                                 </ButtonGroup>
                             </CardFooter>
                         </Card>
-
                     </VStack>
 
             </Box>

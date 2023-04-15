@@ -42,15 +42,15 @@ const SubmitProduct = () => {
                             w={"500px"}
                         >
                             <CardBody>
-                                <FormControl
-                                    my={5}
-                                >
-                                    <FormLabel>提出物</FormLabel>
+                                <FormControl>
+                                    <FormLabel>Submission</FormLabel>
                                     <Input />
                                 </FormControl>
 
                                 <Center>
-                                    <Button>
+                                    <Button
+                                        mt={5}
+                                    >
                                         Submit
                                     </Button>
                                 </Center>

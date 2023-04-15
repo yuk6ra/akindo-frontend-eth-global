@@ -80,7 +80,10 @@ const CreateHackathon = () => {
                                     pt={0}
                                 >
                                     <Center>
-                                        <Button>Safe.Global</Button>
+                                        <Button
+                                            colorScheme='whatsapp'
+                                            onClick={()=>window.open("https://app.safe.global/new-safe/create")}
+                                        >Safe.Global</Button>
 
                                     </Center>
 

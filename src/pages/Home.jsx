@@ -21,17 +21,18 @@ const Home = () => {
         <>
 
             <Center>
+
                 <Box>
                     <Heading
                         as={"h1"}
                         my={5}
                         color={"white"}
                     >
-                        Description
+                        Pages
                     </Heading>
 
                     <Card
-                        w={"500px"}
+                        w={"700px"}
                     >
                         <CardBody>
 
@@ -79,6 +80,8 @@ const Home = () => {
 
                             <Heading
                                 as="h2"
+                                size={"md"}
+
                             >
                                 for Judges
                             </Heading>
