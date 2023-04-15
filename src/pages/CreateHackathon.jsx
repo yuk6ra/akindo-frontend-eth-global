@@ -26,9 +26,12 @@ import {
 } from '@chakra-ui/react'
 
 import SliderInput from '../components/SliderInput.jsx'
+import HackathonContract from '../ABIs/WaveHackathon.json'
+import { ethers } from 'ethers'
+
+const CONTRACT_ADDRESS = "0xA44613e3eE9d4f54FAbD240849d97efA158f71e6"
 
 const CreateHackathon = () => {
-
     const [walletAddress, setWalletAddress] = useState(null);
 
     const [ERC20unit, setERC20Unit] = useState("USDC");
@@ -37,6 +40,13 @@ const CreateHackathon = () => {
     const [depositAmount, setDepositAmount] = useState(0);
     const [waveSubmitTime, setWaveSubmitTime] = useState(3);
     const [waveVoteTime, setWaveVoteTime] = useState(1); // 1 day constant
+
+    // Minig
+    const [txnHash, setTxnHash] = useState(null);
+    const [miningStatus, setMiningStatus] = useState(null);
+
+    const abi = HackathonContract.abi
+    console.log(abi)
 
     const hackathonId = 1;
 
@@ -51,9 +61,7 @@ const CreateHackathon = () => {
         checkWalletIsConnected();
     }, [walletAddress])
 
-    const usdcContractAddress = "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4"
-
-    console.log(depositAmount)
+    const usdcContractAddress = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F"
 
     const boxMy = 6
 
@@ -65,6 +73,41 @@ const CreateHackathon = () => {
         if (accounts.length !== 0) {
             const account = accounts[0];
             setWalletAddress(account);
+        }
+    }  
+
+    const openHackathon = async () => {
+        try {
+            setMiningStatus('mining');
+
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                console.log("ethereum")
+                const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+
+                let open = await contract.open(
+                    usdcContractAddress,
+                    walletAddress,
+                    10, // 10 wavesPrize
+                    1000, // 1000 depositAmount
+                    600, // 10min
+                    600, // 10min
+                    "HelloWorld",
+                    { gasLimit: 270000 }
+                );
+                await open.wait();
+
+                setTxnHash(open.hash);
+                setMiningStatus('success');
+            } else {
+                setMiningStatus('error');
+            }
+
+        } catch (err) {
+            setMiningStatus('error');
+            console.log("err");
         }
     }
 
@@ -200,8 +243,12 @@ const CreateHackathon = () => {
                                     </FormControl>
 
                                     {/* Submitする */}
-                                    <Center>
-                                        <Button>Submit</Button>
+                                    <Center
+                                    >
+                                        <Button
+                                            onClick={openHackathon}
+                                        >Submit</Button>
+                                        {miningStatus}
                                     </Center>
 
                                 </CardBody>

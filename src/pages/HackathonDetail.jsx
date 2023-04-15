@@ -153,11 +153,10 @@ const HackathonDetail = () => {
                                                             <AccordionIcon />
                                                         </AccordionButton>
                                                     </h2>
-                                                    <AccordionPanel pb={4}>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                        commodo consequat.
+                                                    <AccordionPanel pb={4}>                                                        
+                                                        Ranking 1: msg.sender : 100 USD: 19
+                                                        Ranking 2: msg.sender : 100 USD: 2 
+                                                        Ranking 3: msg.sender : 100 USD: 3
                                                     </AccordionPanel>
                                                 </AccordionItem>
 
