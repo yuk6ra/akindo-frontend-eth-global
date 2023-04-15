@@ -13,7 +13,7 @@ import Voting from './pages/Voting.jsx';
 import ProductList from './pages/ProductList.jsx';
 import Header from './components/Header.jsx';
 import HackathonList from './pages/HackathonList.jsx';
-import HackathonDetail from './components/HackathonDetail.jsx';
+import HackathonDetail from './pages/HackathonDetail.jsx';
 
 /// Import RainbowKit
 import '@rainbow-me/rainbowkit/styles.css';
@@ -22,11 +22,11 @@ import {
     RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
+import { mainnet, polygon, optimism, arbitrum, goerli, polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, provider } = configureChains(
-    [mainnet],
+    [mainnet, goerli, polygon, polygonMumbai],
     [
         publicProvider()
     ]
@@ -67,8 +67,8 @@ function App() {
 
                         <Header />
                         <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/create" element={<CreateHackathon />} />
+                            <Route path="/" element={<HackathonList />} />
+                            <Route path="/hackathons/create" element={<CreateHackathon />} />
                             <Route path="/submit" element={<SubmitProduct />} />
                             <Route path="/vote" element={<Voting />} />
                             <Route path="/hackathons" element={<HackathonList />} />

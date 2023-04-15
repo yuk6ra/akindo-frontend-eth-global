@@ -19,13 +19,17 @@ import {
     Tag,
 } from '@chakra-ui/react'
 import HackathonCard from '../components/HackathonCard.jsx'
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
+
+    const navigate = useNavigate();    
+
     return (
         <>
             <Center>
                 <Box
-                    w={"500px"}
+                    w={"600px"}
 
                 >
                     <Heading
@@ -39,17 +43,26 @@ const ProductList = () => {
                         w={"500px"}
                     >
                         <CardBody>
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((hackathon) => (
+                            {[1, 2, 3].map((hackathon) => (
                                 <HackathonCard
                                     key={hackathon}
                                     hackathonId={hackathon}
                                 />
                             ))
                             }
+                            <Center
+                                mt={5}
+                            >
+
+                                <Button
+                                    onClick={() => navigate('/hackathons/create')}
+                                >
+                                    Create Hackathon
+                                </Button>
+                            </Center>
                         </CardBody>
                     </Card>
                 </Box>
-
             </Center>
 
         </>

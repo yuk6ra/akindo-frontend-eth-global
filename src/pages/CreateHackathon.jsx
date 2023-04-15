@@ -22,11 +22,14 @@ import {
     VStack,
     Heading,
     Button,
+    Link
 } from '@chakra-ui/react'
 
 import SliderInput from '../components/SliderInput.jsx'
 
 const CreateHackathon = () => {
+
+    const [walletAddress, setWalletAddress] = useState(null);
 
     const [ERC20unit, setERC20Unit] = useState("USDC");
     const [waveCount, setWaveCount] = useState(5)
@@ -37,9 +40,16 @@ const CreateHackathon = () => {
 
     const hackathonId = 1;
 
+    console.log(walletAddress)
+
+
     useEffect(() => {
         setDepositAmount(waveCount * prizePerWave);
     }, [waveCount, prizePerWave])
+
+    useEffect(() => {
+        checkWalletIsConnected();
+    }, [walletAddress])
 
     const usdcContractAddress = "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4"
 
@@ -47,13 +57,25 @@ const CreateHackathon = () => {
 
     const boxMy = 6
 
+    const checkWalletIsConnected = async () => {
+        const { ethereum } = window;
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        const network = await ethereum.request({ method: 'eth_chainId' });
+
+        if (accounts.length !== 0) {
+            const account = accounts[0];
+            setWalletAddress(account);
+        }
+    }
+
+
     return (
         <>
             <Center>
 
 
                 <Box
-                    w={"500px"}
+                    w={"600px"}
 
                 >
                     <Heading
@@ -69,37 +91,13 @@ const CreateHackathon = () => {
                             spacing={5}
                         >
                             <Card
-                                w={"500px"}
-                            >
-                                <CardHeader>
-                                    <Heading size={"md"}>
-                                        1. Create Safe Address
-                                    </Heading>
-                                </CardHeader>
-                                <CardBody
-                                    pt={0}
-                                >
-                                    <Center>
-                                        <Button
-                                            colorScheme='whatsapp'
-                                            onClick={()=>window.open("https://app.safe.global/new-safe/create")}
-                                        >Safe.Global</Button>
-
-                                    </Center>
-
-                                </CardBody>
-
-
-                            </Card>
-
-                            <Card
-                                w={"500px"}
+                                w={"600px"}
 
                             >
                                 <CardHeader>
-                                    <Heading size={"md"}>
+                                    {/* <Heading size={"md"}>
                                         2. Create Hackathon
-                                    </Heading>
+                                    </Heading> */}
                                 </CardHeader>
                                 <CardBody
                                     pt={0}
@@ -189,6 +187,13 @@ const CreateHackathon = () => {
                                             <Input placeholder='10000'
                                                 defaultValue={usdcContractAddress}
                                             />
+                                            <FormHelperText>
+                                                If you do not have a Safe Address, you can refer to
+                                                {" "}<Link href="https://docs.safe.global/" color="blue.500">
+                                                    this document
+                                                </Link>{" "}
+                                                to create one.
+                                            </FormHelperText>
 
                                         </Box>
 
@@ -198,7 +203,6 @@ const CreateHackathon = () => {
                                     <Center>
                                         <Button>Submit</Button>
                                     </Center>
-
 
                                 </CardBody>
 
