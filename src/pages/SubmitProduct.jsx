@@ -19,26 +19,35 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
+    Heading,
+    VStack,
 } from '@chakra-ui/react'
 
 const SubmitProduct = () => {
     return (
         <>
             <Center>
-                <Box
-                    colorScheme={"white"}
-                    width={"500px"}
-                    height={"500px"}
-                >
-                    <FormControl>
-                        <FormLabel>提出物</FormLabel>
-                        <Input />
-                    </FormControl>
-                    <Button>
-                        Submit
-                    </Button>
+                <VStack>
+                    <Heading as={"h1"}>for CoreTeam</Heading>
+                    <Card>
+                        <CardBody>
+                            <FormControl
+                                my={5}
+                            >
+                                <FormLabel>提出物</FormLabel>
+                                <Input />
+                            </FormControl>
 
-                </Box>
+                            <Center>
+                                <Button>
+                                    Submit
+                                </Button>
+                            </Center>
+                        </CardBody>
+
+                    </Card>
+                </VStack>
+
             </Center>
 
         </>
