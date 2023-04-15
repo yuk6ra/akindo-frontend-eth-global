@@ -19,6 +19,9 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
     HStack,
+    VStack,
+    Heading,
+    Button,
 } from '@chakra-ui/react'
 
 import SliderInput from '../components/SliderInput.jsx'
@@ -29,14 +32,16 @@ const CreateHackathon = () => {
     const [waveCount, setWaveCount] = useState(5)
     const [prizePerWave, setPrizePerWave] = useState(100);
     const [depositAmount, setDepositAmount] = useState(0);
+    const [waveSubmitTime, setWaveSubmitTime] = useState(3);
+    const [waveVoteTime, setWaveVoteTime] = useState(1); // 1 day constant
 
     const hackathonId = 1;
 
     useEffect(() => {
         setDepositAmount(waveCount * prizePerWave);
     }, [waveCount, prizePerWave])
-    
-    const usdcContractAddress = "0x0000000000"
+
+    const usdcContractAddress = "0xd35CCeEAD182dcee0F148EbaC9447DA2c4D449c4"
 
     console.log(depositAmount)
 
@@ -49,87 +54,137 @@ const CreateHackathon = () => {
             >
 
                 <Center>
-                    <Card>
-                        <CardBody>
-                            <FormControl>
+                    <VStack
+                        spacing={5}
+                    >
+                        <Card
+                            w={"500px"}
+                        >
+                            <CardHeader>
+                                <Heading as={"h1"}>
+                                    1. Create Safe Address
+                                </Heading>
+                            </CardHeader>
+                            <CardBody
+                                pt={0}
+                            >
+                                <Center>
+                                    <Button>Safe.Global</Button>
 
-                                <Box
-                                    my={boxMy}
-                                >
-                                    <FormLabel>Prize</FormLabel>
-                                    <Select
-                                        placeholder='Select ERC20'
-                                        onChange={(e) => setERC20Unit(e.target.value)}
+                                </Center>
+
+                            </CardBody>
+
+
+                        </Card>
+
+                        <Card
+                            w={"500px"}
+
+                        >
+                            <CardHeader>
+                                <Heading as={"h1"}>
+                                    2. Create Hackathon
+                                </Heading>
+                            </CardHeader>
+                            <CardBody
+                                pt={0}
+                            >
+
+                                <FormControl>
+
+                                    <Box
+                                        mb={boxMy}
                                     >
-                                        <option>USDC</option>
-                                        <option>USDT</option>
-                                        <option>ETH</option>
-                                    </Select>
-                                </Box>
-
-                                <Box
-                                    my={boxMy}
-                                >
-                                    <FormLabel>Wave Count</FormLabel>
-                                    <SliderInput
-                                        setValue={setWaveCount}
-                                        value={waveCount}
-                                    />
-                                </Box>
-
-                                <Box
-                                    my={boxMy}
-                                >
-
-                                    <FormLabel>Prize/wave</FormLabel>
-                                    <NumberInput
-                                        defaultValue={100}
-                                        // max={500} 
-                                        min={100}
-                                        onChange={(value) => setPrizePerWave(value)}
-                                    >
-                                        <NumberInputField />
-                                    </NumberInput>
-                                </Box>
-
-                                <Box
-                                    my={boxMy}
-                                >
-                                    <FormLabel>Deposit Amount</FormLabel>
-                                    <HStack>
-
-                                        <Text
-                                            ml={4}
-                                            my={2}
+                                        <FormLabel>ERC20</FormLabel>
+                                        <Select
+                                            placeholder='Select ERC20'
+                                            onChange={(e) => setERC20Unit(e.target.value)}
                                         >
-                                            {depositAmount}
-                                        </Text>
-                                        <Text>
-                                            {ERC20unit}
-                                        </Text>
+                                            <option value='USDC'>USDC</option>
+                                            <option value='USDT'>USDT</option>
+                                        </Select>
+                                    </Box>
 
-                                    </HStack>
+                                    <Box
+                                        my={boxMy}
+                                    >
+                                        <FormLabel>Wave Count</FormLabel>
+                                        <SliderInput
+                                            setValue={setWaveCount}
+                                            value={waveCount}
+                                        />
+                                    </Box>
 
-                                </Box>
+                                    <Box
+                                        my={boxMy}
+                                    >
 
-                                <Box
-                                    my={boxMy}
-                                >
+                                        <FormLabel>Prize/wave</FormLabel>
+                                        <NumberInput
+                                            defaultValue={100}
+                                            // max={500} 
+                                            min={100}
+                                            onChange={(value) => setPrizePerWave(value)}
+                                        >
+                                            <NumberInputField />
+                                        </NumberInput>
+                                    </Box>
 
-                                    <FormLabel>
-                                        Safe Address
-                                    </FormLabel>
-                                    <Input placeholder='10000'
-                                        defaultValue="0x0000"
-                                    />
+                                    <Box
+                                        my={boxMy}
+                                    >
+                                        <FormLabel>Deposit Amount</FormLabel>
+                                        <HStack>
 
-                                </Box>
+                                            <Text
+                                                ml={4}
+                                                my={2}
+                                            >
+                                                {depositAmount}
+                                            </Text>
+                                            <Text>
+                                                {ERC20unit}
+                                            </Text>
 
-                            </FormControl>
+                                        </HStack>
 
-                        </CardBody>
+                                    </Box>
 
-                    </Card>
+                                    <Box
+                                        my={boxMy}
+                                    >
+                                        <FormLabel>SubmitTime</FormLabel>
+                                        <Select
+                                            placeholder='_waveSubmitTime'
+                                            onChange={(e) => setWaveSubmitTime(e.target.value)}
+                                        >
+                                            <option value='3'>3 days</option>
+                                            <option value='7'>7 days</option>
+                                            <option value='14'>14 days</option>
+                                            <option value='30'>30 days</option>
+                                        </Select>
+                                    </Box>
+
+                                    <Box
+                                        my={boxMy}
+                                    >
+                                        <FormLabel>
+                                            Safe Address
+                                        </FormLabel>
+                                        <Input placeholder='10000'
+                                            defaultValue={usdcContractAddress}
+                                        />
+
+                                    </Box>
+
+                                </FormControl>
+
+                            </CardBody>
+
+                        </Card>
+                    </VStack>
+
                 </Center>
             </Box>
 

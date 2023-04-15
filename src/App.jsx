@@ -11,16 +11,45 @@ import CreateHackathon from './pages/CreateHackathon.jsx';
 import SubmitProduct from './pages/SubmitProduct.jsx';
 import Voting from './pages/Voting.jsx';
 import ProductList from './pages/ProductList.jsx';
+import Header from './components/Header.jsx';
+
+/// Import RainbowKit
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+    getDefaultWallets,
+    RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+
+const { chains, provider } = configureChains(
+    [mainnet],
+    [
+        publicProvider()
+    ]
+);
+
+const { connectors } = getDefaultWallets({
+    appName: 'My RainbowKit App',
+    chains
+});
+
+const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider
+})
 
 export const theme = extendTheme({
     styles: {
-      global: {
-        body: {
-          backgroundColor: '#A50C22',
-        },
-      }
+        global: {
+            body: {
+                backgroundColor: '#0095D9',
+            },
+        }
     }
-  });
+});
 
 
 
@@ -30,15 +59,21 @@ function App() {
         <BrowserRouter>
             <ChakraProvider
                 theme={theme}
-            >                
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/create" element={<CreateHackathon />} />                    
-                    <Route path="/submit" element={<SubmitProduct />} />                    
-                    <Route path="/vote" element={<Voting />} />                    
-                    <Route path="/productlist" element={<ProductList />} />
-                    <Route path="*" element={<h1>404</h1>} />
-                </Routes>
+            >
+                <WagmiConfig client={wagmiClient}>
+                    <RainbowKitProvider chains={chains}>
+
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/create" element={<CreateHackathon />} />
+                            <Route path="/submit" element={<SubmitProduct />} />
+                            <Route path="/vote" element={<Voting />} />
+                            <Route path="/productlist" element={<ProductList />} />
+                            <Route path="*" element={<h1>404</h1>} />
+                        </Routes>
+                    </RainbowKitProvider>
+                </WagmiConfig>
             </ChakraProvider>
         </BrowserRouter>
     )
