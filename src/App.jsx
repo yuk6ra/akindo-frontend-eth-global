@@ -3,6 +3,7 @@ import * as React from 'react'
 // Import the extendTheme function
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { extendTheme } from "@chakra-ui/react";
 
 /// Import pages
 import Home from './pages/Home.jsx';
@@ -10,12 +11,25 @@ import CreateHackathon from './pages/CreateHackathon.jsx';
 import SubmitProduct from './pages/SubmitProduct.jsx';
 import Voting from './pages/Voting.jsx';
 
+export const theme = extendTheme({
+    styles: {
+      global: {
+        body: {
+          backgroundColor: '#A50C22',
+        },
+      }
+    }
+  });
+
+
 
 function App() {
     // 2. Wrap ChakraProvider at the root of your app
     return (
         <BrowserRouter>
-            <ChakraProvider>
+            <ChakraProvider
+                theme={theme}
+            >                
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/create" element={<CreateHackathon />} />                    
