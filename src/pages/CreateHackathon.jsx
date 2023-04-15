@@ -216,11 +216,14 @@ const CreateHackathon = () => {
                                         >
                                             <FormLabel>Hackathon Name</FormLabel>
                                             <Input
-                                                placeholder='Hackathon X'
+                                                placeholder='hackathon-x'
                                                 type='text'
                                                 onChange={(e) => setHackathonId(e.target.value)}                                                                                    
                                             >
                                             </Input>
+                                            <FormHelperText>
+                                                ex: eth-global-tokyo, No spaces allowed
+                                            </FormHelperText>
                                         </Box>
 
 
