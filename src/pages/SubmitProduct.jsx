@@ -27,26 +27,37 @@ const SubmitProduct = () => {
     return (
         <>
             <Center>
-                <VStack>
-                    <Heading as={"h1"}>for CoreTeam</Heading>
-                    <Card>
-                        <CardBody>
-                            <FormControl
-                                my={5}
-                            >
-                                <FormLabel>提出物</FormLabel>
-                                <Input />
-                            </FormControl>
+                <Box
+                    w={"500px"}
 
-                            <Center>
-                                <Button>
-                                    Submit
-                                </Button>
-                            </Center>
-                        </CardBody>
+                >
+                        <Heading
+                            as={"h1"}
+                            my={5}
+                            color={"white"}
+                        >
+                            SubmitProduct
+                        </Heading>
+                        <Card
+                            w={"500px"}
+                        >
+                            <CardBody>
+                                <FormControl
+                                    my={5}
+                                >
+                                    <FormLabel>提出物</FormLabel>
+                                    <Input />
+                                </FormControl>
 
-                    </Card>
-                </VStack>
+                                <Center>
+                                    <Button>
+                                        Submit
+                                    </Button>
+                                </Center>
+                            </CardBody>
+
+                        </Card>
+                </Box>
 
             </Center>
 

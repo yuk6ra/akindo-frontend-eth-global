@@ -49,8 +49,13 @@ const CreateHackathon = () => {
 
     return (
         <>
+            <Center>
+
+
             <Box
                 my="20px"
+                w={"500px"}
+                
             >
 
                 <Center>
@@ -61,7 +66,7 @@ const CreateHackathon = () => {
                             w={"500px"}
                         >
                             <CardHeader>
-                                <Heading as={"h1"}>
+                                <Heading as={"h3"}>
                                     1. Create Safe Address
                                 </Heading>
                             </CardHeader>
@@ -83,7 +88,7 @@ const CreateHackathon = () => {
 
                         >
                             <CardHeader>
-                                <Heading as={"h1"}>
+                                <Heading as={"h3"}>
                                     2. Create Hackathon
                                 </Heading>
                             </CardHeader>
@@ -180,6 +185,12 @@ const CreateHackathon = () => {
 
                                 </FormControl>
 
+                                {/* Submitする */}
+                                <Center>
+                                    <Button>Submit</Button>
+                                </Center>
+
+
                             </CardBody>
 
                         </Card>
@@ -187,6 +198,8 @@ const CreateHackathon = () => {
 
                 </Center>
             </Box>
+            </Center>
+
 
         </>
     )

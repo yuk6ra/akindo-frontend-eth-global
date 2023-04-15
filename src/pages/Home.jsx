@@ -4,6 +4,10 @@ import {
     Button,
     ButtonGroup,
     Heading,
+    Card,
+    Center,
+    CardBody,
+    VStack
 } from '@chakra-ui/react'
 
 import { useNavigate } from 'react-router-dom'
@@ -16,69 +20,84 @@ const Home = () => {
     return (
         <>
 
-            <Box
-                colorScheme={"white"}
-                width={"500px"}
-                height={"500px"}
-            >
+            <Center>
+                <VStack>
 
-                <Heading
-                    as="h2"
-                    textColor={'white'}
-                >
-                    Hackathon
-                </Heading>
-                <Button
-                    colorScheme="gray"
-                    variant="solid"
-                    onClick={() => navigate('/create')}
-                >
-                    Hackathon Create
-                </Button>
+                    <Heading
+                        as={"h1"}
+                    >
+                        Description
+                    </Heading>
 
-                <Heading
-                    as="h2"
-                    textColor={'white'}
-                >
-                    for CoreTeam
-                </Heading>
-                <ButtonGroup>
-                <Button
-                    colorScheme="gray"
-                    variant="solid"
-                    onClick={() => navigate('/submit')}
-                >
-                    Submit Product
-                </Button>
+                    <Card
+                        mt={"10"}
+                        w={"500px"}
+                    >
+                        <CardBody>
 
-                <Button
-                    colorScheme="gray"
-                    variant="solid"
-                    onClick={() => navigate('/productlist')}
-                >
-                    Product List
-                </Button>
+                            <Heading
+                                as="h2"
+                                size={"md"}
+                            >
+                                Hackathon
+                            </Heading>
+                            <Button
+                                colorScheme="gray"
+                                variant="solid"
+                                onClick={() => navigate('/create')}
+                            >
+                                Hackathon Create
+                            </Button>
+
+                            <Heading
+                                as="h2"
+                                size={"md"}
+                            >
+                                for CoreTeam
+                            </Heading>
+                            <ButtonGroup>
+                                <Button
+                                    colorScheme="gray"
+                                    variant="solid"
+                                    onClick={() => navigate('/submit')}
+                                >
+                                    Submit Product
+                                </Button>
+
+                                <Button
+                                    colorScheme="gray"
+                                    variant="solid"
+                                    onClick={() => navigate('/productlist')}
+                                >
+                                    Product List
+                                </Button>
 
 
-                </ButtonGroup>
+                            </ButtonGroup>
 
 
 
-                <Heading
-                    as="h2"
-                    textColor={'white'}
-                >
-                    for Judges
-                </Heading>
-                <Button
-                    colorScheme="gray"
-                    variant="solid"
-                    onClick={() => navigate('/vote')}
-                >
-                    Voting now
-                </Button>
+                            <Heading
+                                as="h2"
+                            >
+                                for Judges
+                            </Heading>
+                            <Button
+                                colorScheme="gray"
+                                variant="solid"
+                                onClick={() => navigate('/vote')}
+                            >
+                                Voting now
+                            </Button>
 
-            </Box>
+                        </CardBody>
+
+                    </Card>
+                </VStack>
+
+            </Center>
+
+
         </>
     )
 }

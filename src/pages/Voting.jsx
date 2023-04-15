@@ -36,48 +36,47 @@ const Voting = () => {
 
     return (
         <>
-            <Heading as={"h1"}>Voting Now</Heading>
             <Center>
-                <VStack>
-                    <Card
-                        w="700px"
-                    >
-                        <CardHeader>
-                            <Heading as={"h2"}>Hackathon 1</Heading>
-                        </CardHeader>
-                        {/* <CardBody>
-                            <Tag colorScheme='teal'>Wave 1</Tag>
-                        </CardBody> */}
-                        <CardFooter>
-                            <ButtonGroup>
-                            
-                                <Button
-                                    onClick={() => window.open(snapshotUrl + 1)}
-                                >SnapShot Space</Button>
-                                <Button
-                                    onClick={()=> navigate('/productlist')}
-                                >
-                                    View Products
-                                </Button>
-                            </ButtonGroup>
-                        </CardFooter>
-                    </Card>
 
-                    <Card
-                        w="700px"
+            <Box
+                w={"500px"}                
+            >
+                    <Heading
+                        as={"h1"}
+                        my={5}
+                        color={"white"}
                     >
-                        <CardHeader>
-                            <Heading as={"h2"}>Hackathon 2</Heading>
-                        </CardHeader>
-                        <CardBody>
-                            <Button
-                                onClick={() => window.open(snapshotUrl + 1)}
-                            >SnapShot Space</Button>
-                        </CardBody>
-                    </Card>
-                </VStack>
+                        Voting Now
+                    </Heading>
 
+                    <VStack>
+                        <Card
+                            w="500px"
+                        >
+                            <CardHeader>
+                                <Heading size={"md"}>Hackathon 1</Heading>
+                            </CardHeader>
+                            <CardFooter>
+                                <ButtonGroup>
+
+                                    <Button
+                                        onClick={() => window.open(snapshotUrl + 1)}
+                                    >SnapShot Space</Button>
+                                    <Button
+                                        onClick={() => navigate('/productlist')}
+                                    >
+                                        View Products
+                                    </Button>
+                                </ButtonGroup>
+                            </CardFooter>
+                        </Card>
+
+                    </VStack>
+
+            </Box>
             </Center>
+
+
 
         </>
     )

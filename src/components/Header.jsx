@@ -23,7 +23,6 @@ import { useNavigate } from 'react-router-dom';
 import WalletConnect from './WalletConnect.jsx';
 
 
-
 const CustomButton = ({
     variant = 'ghost',
     hover_bg = 'black',
@@ -60,12 +59,39 @@ const Header = () => {
                 justifyContent="space-between"
                 px={10}
             >
+                <HStack>
+
                     <Heading
                         onClick={() => navigate('/')}
-                    >Wave Hackathon</Heading>
-                    <WalletConnect />
-            </Box>
+                        _hover={{
+                            cursor: 'pointer',
+                        }}
+                        mx={5}
+                    >Wave Hackathon
+                    </Heading>
+                    <HStack>
+                        <CustomButton
+                            onClick={() => navigate('/create')}
+                        >
+                            Create Hackathon
+                        </CustomButton>
+                        <CustomButton
+                            onClick={() => navigate('/submit')}
+                        >
+                            Submit Product
+                        </CustomButton>
+                        <CustomButton
+                            onClick={() => navigate('/vote')}
+                        >
+                            Voting Now
+                        </CustomButton>
 
+                    </HStack>
+                </HStack>
+
+
+                <WalletConnect />
+            </Box>
         </>
     );
 }
