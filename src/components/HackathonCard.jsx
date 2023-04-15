@@ -27,13 +27,19 @@ const HackathonCard = ({
     waveStatus = 0,
 }) => {
     const navigate = useNavigate()
-    
+
     return (
         <>
             <Card
                 my={2}
                 bg={"gray.50"}
                 boxShadow={"none"}
+                onClick={() => {
+                    navigate(`/hackathons/${hackathonId}`)
+                }}
+                _hover={{
+                    cursor: "pointer",
+                }}
             >
                 <CardBody
                 >
@@ -56,12 +62,14 @@ const HackathonCard = ({
                             </Tag>
                         </HStack>
 
-                        <Button                            
-                            onClick={() => {
-                                navigate(`/hackathons/${hackathonId}`)
-                            }}                       
+                        <Button
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                window.open(`https://snapshot.org/#/hackathon.eth/proposal/${hackathonId}`);
+                            }}
+                            isDisabled={"true"}
                         >
-                            View Details
+                            Vote Now
                         </Button>
                     </Box>
 

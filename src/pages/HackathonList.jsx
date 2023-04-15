@@ -30,7 +30,6 @@ const ProductList = () => {
             <Center>
                 <Box
                     w={"600px"}
-
                 >
                     <Heading
                         as={"h1"}
