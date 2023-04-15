@@ -36,7 +36,7 @@ const SubmitProduct = () => {
                             my={5}
                             color={"white"}
                         >
-                            SubmitProduct
+                            Submit Product
                         </Heading>
                         <Card
                             w={"500px"}

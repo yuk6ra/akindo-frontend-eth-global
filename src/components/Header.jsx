@@ -57,7 +57,7 @@ const Header = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
-                px={10}
+                px={5}
             >
                 <HStack>
 
@@ -67,7 +67,7 @@ const Header = () => {
                             cursor: 'pointer',
                         }}
                         mx={5}
-                    >Wave Hackathon
+                    >WaveHackathon
                     </Heading>
                     <HStack>
                         <CustomButton

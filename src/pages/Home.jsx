@@ -21,16 +21,16 @@ const Home = () => {
         <>
 
             <Center>
-                <VStack>
-
+                <Box>
                     <Heading
                         as={"h1"}
+                        my={5}
+                        color={"white"}
                     >
                         Description
                     </Heading>
 
                     <Card
-                        mt={"10"}
                         w={"500px"}
                     >
                         <CardBody>
@@ -93,9 +93,9 @@ const Home = () => {
                         </CardBody>
 
                     </Card>
-                </VStack>
+            </Box>
 
-            </Center>
+        </Center >
 
 
         </>
