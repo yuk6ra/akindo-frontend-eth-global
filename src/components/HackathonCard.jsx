@@ -56,10 +56,10 @@ const HackathonCard = ({
                             </Tag>
                         </HStack>
 
-                        <Button
+                        <Button                            
                             onClick={() => {
                                 navigate(`/hackathons/${hackathonId}`)
-                            }}                        
+                            }}                       
                         >
                             View Details
                         </Button>
