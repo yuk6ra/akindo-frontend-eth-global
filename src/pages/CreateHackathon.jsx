@@ -33,11 +33,9 @@ import { useNavigate } from 'react-router-dom'
 import HackathonContract from '../ABIs/WaveHackathon.json'
 import USDCContract from '../ABIs/FiatTokenV2_1.json'
 
-// const CONTRACT_ADDRESS = "0xA44613e3eE9d4f54FAbD240849d97efA158f71e6"
-// const CONTRACT_ADDRESS = "0xA44613e3eE9d4f54FAbD240849d97efA158f71e6"
-const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: mumbai
-// const USDC_ADDRESS = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F"
-const USDC_ADDRESS = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"/// @dev: LINK
+import { CONTRACT_ADDRESS, ERC20_SAMPLE_ADDRESS } from '../Config.js'
+
+const USDC_ADDRESS = ERC20_SAMPLE_ADDRESS
 
 const CreateHackathon = () => {
     const [walletAddress, setWalletAddress] = useState(null);
@@ -218,7 +216,7 @@ const CreateHackathon = () => {
                                         >
                                             <FormLabel>Hackathon Name</FormLabel>
                                             <Input
-                                                placeholder='Project X'
+                                                placeholder='Hackathon X'
                                                 type='text'
                                                 onChange={(e) => setHackathonId(e.target.value)}                                                                                    
                                             >

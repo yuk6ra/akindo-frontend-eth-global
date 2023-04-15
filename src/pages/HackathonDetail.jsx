@@ -40,7 +40,8 @@ import HackathonContract from "../ABIs/WaveHackathon.json";
 
 import ProductCard from "../components/ProductCard.jsx";
 
-const CONTRACT_ADDRESS = "0x5e4d6E43896A215404E576bfBcF0EE3d3891A5ae" /// @dev: mumbai
+import { CONTRACT_ADDRESS, ERC20_SAMPLE_ADDRESS } from '../Config.js'
+
 
 const HackathonDetail = () => {
 
