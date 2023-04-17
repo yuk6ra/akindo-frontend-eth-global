@@ -12,14 +12,6 @@ import {
     FormErrorMessage,
     FormHelperText,
     Input,
-    Select,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-    HStack,
-    VStack,
     Heading,
     Button,
     Tabs,
@@ -33,6 +25,15 @@ import {
     AccordionPanel,
     AccordionIcon,
     Tag,
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer,
 } from '@chakra-ui/react'
 import { useLocation } from 'react-router-dom';
 import { ethers } from "ethers";
@@ -49,12 +50,13 @@ const HackathonDetail = () => {
     const [miningStatus, setMiningStatus] = useState(null);
     const [submitProductsList, setSubmitProductsList] = useState([]);
     const [waveCount, setWaveCount] = useState(0);
+    const [waves, setWaves] = useState([])
 
     const location = useLocation();
     // 応急処置, 空白処理なし
     const hackathonId = location.pathname.split("/").pop();
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getSubmitProducts();
     }, [])
 
@@ -63,24 +65,33 @@ const HackathonDetail = () => {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, HackathonContract.abi, signer);
 
     useEffect(() => {
-        const fetchWaveCount = async () =>{
+        const fetchWaveCount = async () => {
             const count = await contract.getWaveCount(hackathonId);
             setWaveCount(count.toNumber());
         }
         fetchWaveCount();
     }, []);
 
+    useEffect(() => {
+        const getWaveCount = async () => {
+            const wave = await contract.getWaves(hackathonId);
+            console.log(wave)
+            setWaves(wave);
+        }
+        getWaveCount();
+    }, [waves]);
+
     const getSubmitProducts = async () => {
         const hakachons_ = await contract.getSubmitProducts(
             hackathonId, 0
         );
-        setSubmitProductsList(hakachons_);        
-        
+        setSubmitProductsList(hakachons_);
+
     }
 
 
-    const submitProduct = async () => {
 
+    const submitProduct = async () => {
         try {
             setMiningStatus('mining');
 
@@ -132,9 +143,9 @@ const HackathonDetail = () => {
                                 colorScheme='green'
                             >Wave {waveCount}</Tag>
 
-                            <Tabs 
+                            <Tabs
                                 mt={5}
-                            variant='soft-rounded' colorScheme='blue'>
+                                variant='soft-rounded' colorScheme='blue'>
                                 <TabList>
                                     <Tab>Overview</Tab>
                                     <Tab>Award History</Tab>
@@ -209,28 +220,42 @@ const HackathonDetail = () => {
                                     </TabPanel>
                                     <TabPanel>
                                         <Accordion defaultIndex={[0]} allowMultiple>
-                                            {[1, 2, 3].map((pastWave) => (
-
-                                                <AccordionItem
-                                                    key={pastWave}
-                                                >
+                                            {waves.map((pastWave) => (
+                                                <AccordionItem key={pastWave.status}>
                                                     <h2>
                                                         <AccordionButton>
                                                             <Box as="span" flex='1' textAlign='left'>
-                                                                Wave {pastWave}
+                                                                Wave {pastWave.status}
                                                             </Box>
                                                             <AccordionIcon />
                                                         </AccordionButton>
                                                     </h2>
-                                                    <AccordionPanel pb={4}>                                                        
-                                                        Ranking 1: msg.sender : 100 USD: 19
-                                                        Ranking 2: msg.sender : 100 USD: 2 
-                                                        Ranking 3: msg.sender : 100 USD: 3
+                                                    <AccordionPanel pb={4}>
+                                                        <TableContainer>
+                                                            <Table variant='simple'>
+                                                                <Thead>
+                                                                    <Tr>
+                                                                        <Th>Product</Th>
+                                                                        <Th>Voting</Th>
+                                                                    </Tr>
+                                                                </Thead>
+                                                                {pastWave &&
+                                                                    pastWave.submitAddresses.map((address, index) => (
+                                                                        <Tbody
+                                                                            key={index}
+                                                                        >
+                                                                            <Tr>
+                                                                                <Th>{address}</Th>
+                                                                                <Th> {pastWave?.votes[index]?.toNumber()}</Th>
+                                                                            </Tr>
+                                                                        </Tbody>
+                                                                    ))}
+                                                            </Table>
+                                                        </TableContainer>
                                                     </AccordionPanel>
                                                 </AccordionItem>
-
-
                                             ))}
+
                                         </Accordion>
 
                                     </TabPanel>

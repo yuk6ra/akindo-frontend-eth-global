@@ -49,6 +49,7 @@ const CreateHackathon = () => {
     const [depositAmount, setDepositAmount] = useState(null);
     const [waveSubmitTime, setWaveSubmitTime] = useState(3);
     const [waveVoteTime, setWaveVoteTime] = useState(100); // 1 day constant
+    const [channelAddress, setChannelAddress] = useState(null)
 
 
     // Minig
@@ -69,6 +70,15 @@ const CreateHackathon = () => {
 
         checkWalletIsConnected();
     }, [walletAddress])
+
+    console.log(ERC20address,
+        walletAddress,
+        channelAddress,
+        wavesPrize, // 10 wavesPrize
+        depositAmount, // 1000 depositAmount
+        waveSubmitTime, // 10min
+        waveVoteTime, // 10min
+        hackathonId)
 
 
     const boxMy = 6
@@ -138,11 +148,11 @@ const CreateHackathon = () => {
     const openHackathon = async () => {
         try {
 
-            if (await isApproved()) {
-                console.log("approved")
-            } else {
-                await approve();
-            }
+            // if (await isApproved()) {
+            //     console.log("approved")
+            // } else {
+            //     await approve();
+            // }
 
             setMiningStatus('mining');
 
@@ -153,9 +163,11 @@ const CreateHackathon = () => {
                 // const seed = Math.random().toString(36).substring(7) // hackathon name
                 const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
+                console.log("a")
                 let open = await contract.open(
                     ERC20address,
                     walletAddress,
+                    channelAddress,
                     wavesPrize, // 10 wavesPrize
                     depositAmount, // 1000 depositAmount
                     waveSubmitTime, // 10min
@@ -163,6 +175,8 @@ const CreateHackathon = () => {
                     hackathonId,
                     { gasLimit: 800000 }
                 );
+                console.log("a")
+
                 await open.wait();
 
                 setTxnHash(open.hash);
@@ -314,8 +328,9 @@ const CreateHackathon = () => {
                                             <FormLabel>
                                                 Safe Address
                                             </FormLabel>
-                                            <Input placeholder='10000'
-                                                defaultValue={"0x07865c6E87B9F70255377e024ace6630C1Eaa37F"}
+                                            <Input placeholder='0x0000000000000000000000000000000000000000'
+                                                defaultValue={"0x236d77e1ae7ec54bbc568e32db9d5426c8bc0d6f"}
+                                                // onChange={(e)=>setChannelAddress(e.target.value)}
                                             />
                                             <FormHelperText>
                                                 If you do not have a Safe Address, you can refer to
@@ -323,6 +338,23 @@ const CreateHackathon = () => {
                                                     this document
                                                 </Link>{" "}
                                                 to create one.
+                                            </FormHelperText>
+
+                                        </Box>
+                                        <Box
+                                            my={boxMy}
+                                        >
+                                            <FormLabel>
+                                                Channel by Push Protocol
+                                            </FormLabel>
+                                            <Input placeholder='0x236d77e1ae7ec54bbc568e32db9d5426c8bc0d6f'
+                                                onChange={(e)=>setChannelAddress(e.target.value)}
+                                            />
+                                            <FormHelperText>
+                                            If you have not created a channel using the Push protocol, please refer to the documentation here.
+                                                {" "}<Link href="https://docs.push.org/developers" color="blue.500">
+                                                here
+                                                </Link>
                                             </FormHelperText>
 
                                         </Box>
